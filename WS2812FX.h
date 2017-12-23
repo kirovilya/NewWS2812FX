@@ -69,7 +69,7 @@
 #define PURPLE  0x400080
 #define ORANGE  0xFF3000
 
-#define MODE_COUNT 56+4
+#define MODE_COUNT 56+5
 
 #define FX_MODE_STATIC                   0
 #define FX_MODE_BLINK                    1
@@ -132,6 +132,7 @@
 #define FX_MODE_EXT_LARSON_SCANNER      57
 #define FX_MODE_EXT_FIREWORKS_RANDOM    58
 #define FX_MODE_EXT_STAR                59
+#define FX_MODE_EXT_RUN_CHRISTMASS      60
 
 class WS2812FX : public Adafruit_NeoPixel {
 
@@ -220,6 +221,7 @@ class WS2812FX : public Adafruit_NeoPixel {
       _mode[FX_MODE_EXT_LARSON_SCANNER]      = &WS2812FX::mode_ext_larson;
       _mode[FX_MODE_EXT_FIREWORKS_RANDOM]    = &WS2812FX::mode_ext_fireworks;
       _mode[FX_MODE_EXT_STAR]                = &WS2812FX::mode_ext_star;
+      _mode[FX_MODE_EXT_RUN_CHRISTMASS]      = &WS2812FX::mode_ext_christmass;
 
       _name[FX_MODE_STATIC]                    = F("Static");
       _name[FX_MODE_BLINK]                     = F("Blink");
@@ -281,6 +283,7 @@ class WS2812FX : public Adafruit_NeoPixel {
       _name[FX_MODE_EXT_LARSON_SCANNER]        = F("Ext larson");
       _name[FX_MODE_EXT_FIREWORKS_RANDOM]      = F("Ext fireworks");
       _name[FX_MODE_EXT_STAR]                  = F("Ext star");
+      _name[FX_MODE_EXT_RUN_CHRISTMASS]        = F("Ext Christmass");
 
       _brightness = DEFAULT_BRIGHTNESS;
       _running = false;
@@ -414,11 +417,13 @@ class WS2812FX : public Adafruit_NeoPixel {
       mode_ext_circle(void),
       mode_ext_larson(void),
       mode_ext_fireworks(void),
-      mode_ext_star(void);
+      mode_ext_star(void),
+      mode_ext_christmass(void);
 
     uint16_t remap_pos(uint16_t pos);
     uint16_t map_pos(uint16_t x, uint16_t y);    
     uint32_t fade_color(uint32_t color, uint8_t level);
+    uint16_t ext_running(uint32_t color1, uint32_t color2);
 
     boolean
       _running,

@@ -1487,3 +1487,31 @@ uint16_t WS2812FX::mode_ext_star(void) {
   SEGMENT_RUNTIME.counter_mode_step = (SEGMENT_RUNTIME.counter_mode_step + 1) & 0xFF;
   return (SEGMENT.speed / 64);
 }
+
+uint16_t WS2812FX::ext_running(uint32_t color1, uint32_t color2) {
+  bool reverse = not SEGMENT.reverse;
+  for(uint16_t i=0; i < 30; i++) {
+    for(uint16_t j=0; j < 10; j++) {
+      if((i + SEGMENT_RUNTIME.counter_mode_step) % 6 < 3) {
+        if(reverse) {
+          Adafruit_NeoPixel::setPixelColor(map_pos(0 + i, j), color1);
+        } else {
+          Adafruit_NeoPixel::setPixelColor(map_pos(29 - i, j), color1);
+        }
+      } else {
+        if(reverse) {
+          Adafruit_NeoPixel::setPixelColor(map_pos(0 + i, j), color2);
+        } else {
+          Adafruit_NeoPixel::setPixelColor(map_pos(29 - i, j), color2);
+        }
+      }
+    }
+  }
+  SEGMENT_RUNTIME.counter_mode_step = (SEGMENT_RUNTIME.counter_mode_step + 1) % 6;
+  return (SEGMENT.speed / 128);
+}
+
+uint16_t WS2812FX::mode_ext_christmass(void) {
+  return ext_running(RED, GREEN);
+}
+
